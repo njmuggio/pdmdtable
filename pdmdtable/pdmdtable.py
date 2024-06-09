@@ -1,4 +1,4 @@
-def build_table(header: list[str], body: list[list[str]]) -> str:
+def build_table(header: list, body: list[list]) -> str:
     if len(header) == 0:
         raise TableDimensionError("Header must contain at least one column")
 
@@ -9,6 +9,8 @@ def build_table(header: list[str], body: list[list[str]]) -> str:
         col_widths[idx] = __width(header[idx])
 
     for row in body:
+        while len(row) < len(header):
+            row.append("")
         for col_idx in range(len(row)):
             row[col_idx] = str(row[col_idx])
             col_widths[col_idx] = max(col_widths[col_idx], __width(row[col_idx]))
@@ -34,27 +36,19 @@ class TableDimensionError(ValueError):
 
 
 def __width(s: str) -> int:
-    return max((len(l) for l in s.splitlines()))
+    return max((len(l) for l in s.splitlines())) if s else 0
 
 
 def __height(s: str) -> int:
-    return len(s.splitlines())
+    return max(1, len(s.splitlines()))
 
 
 def __build_row(widths: list[int], cells: list[str]) -> str:
-    if not len(cells):
-        return ""
-
     lines = [""] * max((__height(cell) for cell in cells))
 
-    for cell_idx, cell_width in enumerate(widths):
+    for cell_idx in range(len(widths)):
         cell = cells[cell_idx] if cell_idx < len(cells) else ""
 
-        #for line_idx in range(len(lines)):
-        #    lines[line_idx] += "| "
-
-        #for line_idx, line in enumerate(cell.splitlines()):
-        #    lines[line_idx] += line.ljust(widths[cell_idx] + 1)
         cell_lines = cell.splitlines()
         for line_idx in range(len(lines)):
             lines[line_idx] += "| "

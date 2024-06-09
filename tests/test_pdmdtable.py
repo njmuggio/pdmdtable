@@ -63,7 +63,7 @@ def test_tall_body():
         ["1", "Two things happened:\n - Sample turned blue\n - Sample started singing"],
         ["2", "Nothing of note here"],
     ]
-    assert f"""\
+    assert """\
 +------+---------------------------+
 | Step | Notes                     |
 +======+===========================+
@@ -74,5 +74,47 @@ def test_tall_body():
 | 2    | Nothing of note here      |
 +------+---------------------------+\
 """ == build_table(
+        header, body
+    )
+
+
+def test_short_row():
+    header = ["A", "B"]
+    body = [
+        ["1", "2"],
+        ["5"],
+        ["3", "4"],
+    ]
+    assert """\
++---+---+
+| A | B |
++===+===+
+| 1 | 2 |
++---+---+
+| 5 |   |
++---+---+
+| 3 | 4 |
++---+---+""" == build_table(
+        header, body
+    )
+
+
+def test_empty_row():
+    header = ["A", "B"]
+    body = [
+        ["1", "2"],
+        [],
+        ["3", "4"],
+    ]
+    assert """\
++---+---+
+| A | B |
++===+===+
+| 1 | 2 |
++---+---+
+|   |   |
++---+---+
+| 3 | 4 |
++---+---+""" == build_table(
         header, body
     )
