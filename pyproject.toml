@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools >= 64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdmdtable"
+version = "0.0.1"
+authors = [
+  {name = "Nick Muggio", email = "nick@mugg.io"}
+]
+description = "Tool to assemble ASCII tables compatible with Pandoc's Markdown extensions"
+readme = "README.md"
+license = {file = "LICENSE"}
+dependencies = []
+classifiers = [
+  "License :: OSI Approved :: MIT License"
+]
